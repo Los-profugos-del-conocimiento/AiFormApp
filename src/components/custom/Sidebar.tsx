@@ -3,13 +3,13 @@ import IconButton from "./IconButton";
 
 export default function Sidebar() {
   return (
-    <div className="w-1/5 bg-slate-700">
+    <div className="w-1/5 bg-slate-900">
       <div className="p-4">
         {/* Section 1 */}
         <IconButton
           icon={<IoAddCircleOutline className="w-6 h-6" />}
           text="Crear formulario"
-          className="bg-slate-800 hover:bg-slate-900 text-slate-50"
+          className="bg-blue-500 hover:bg-aiBlue-700 text-slate-50"
         />
         {/* Section 2 */}
         <div className="mb-4">
