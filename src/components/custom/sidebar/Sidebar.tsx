@@ -9,7 +9,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { BsEmojiSunglasses } from "react-icons/bs";
 import { CiLogout } from "react-icons/ci";
 import SidebarFormCard from "./SidebarFormCard";
-
+import { Input } from "@/components/ui/input";
 
 import { useMediaQuery } from "react-responsive";
 
@@ -17,6 +17,8 @@ interface SidebarProps {}
 
 const Sidebar = ({}: SidebarProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredData, setFilteredData] = useState<any[]>([]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -50,6 +52,15 @@ const Sidebar = ({}: SidebarProps) => {
     },
   ];
 
+  useEffect(() => {
+    const normalizedSearchTerm = searchTerm.toLowerCase();
+    const filteredItems = mockData.filter((item) => {
+      const normalizedTitle = item.title.toLowerCase();
+      return normalizedTitle.includes(normalizedSearchTerm);
+    });
+    setFilteredData(filteredItems);
+  }, [searchTerm]);
+
   return (
     <div
       className={`${
@@ -59,13 +70,15 @@ const Sidebar = ({}: SidebarProps) => {
       {/* Sidebar */}
 
       <div
-        className={`${isSidebarOpen ? "block " : "hidden"} p flex flex-col gap-6 `}
+        className={`${
+          isSidebarOpen ? "block " : "hidden"
+        } p flex flex-col gap-6 `}
       >
         <Image src={aiLogo} alt="AI Logo"></Image>
         <Button asChild className=" bg-aiBlue-200 w-[60%] mx-auto">
           <div className="flex justify-start gap-3">
             <IoIosAddCircleOutline size={24} />
-            <Link href="/home">{ isSidebarOpen ? "New Form" : ""}</Link>
+            <Link href="/home">{isSidebarOpen ? "New Form" : ""}</Link>
           </div>
         </Button>
         <Button asChild className=" bg-aiBlue-200 w-[60%] mx-auto">
@@ -76,9 +89,20 @@ const Sidebar = ({}: SidebarProps) => {
         </Button>
 
         <div>
-          {mockData.map((item) => (
-            <SidebarFormCard key={item.id} {...item} />
-          ))}
+          <Input
+            type="text"
+            placeholder="Buscar por nombre"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+
+          {filteredData.length > 0 ? (
+            filteredData.map((item) => (
+              <SidebarFormCard key={item.id} {...item} />
+            ))
+          ) : (
+            <span className="text-gray-400 text-sm mt-4">No results found</span>
+          )}
         </div>
 
         <Button asChild className=" bg-aiBlue-200 w-[40%] mr-auto mx-4 mt-auto">
