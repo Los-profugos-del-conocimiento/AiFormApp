@@ -1,5 +1,5 @@
 // Server components
 export * from "./IconButton"
-export * from "./Sidebar"
+export * from "./sidebar/Sidebar"
 
 // Client components
