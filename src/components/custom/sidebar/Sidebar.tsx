@@ -72,7 +72,7 @@ const Sidebar = ({}: SidebarProps) => {
       <div
         className={`${
           isSidebarOpen ? "block " : "hidden"
-        } p flex flex-col gap-6 `}
+        } p flex flex-col gap-6 h-full `}
       >
         <Image src={aiLogo} alt="AI Logo"></Image>
         <Button asChild className=" bg-aiBlue-200 w-[60%] mx-auto">
@@ -88,14 +88,14 @@ const Sidebar = ({}: SidebarProps) => {
           </div>
         </Button>
 
-        <div>
-          <Input
+        <Input
             type="text"
             placeholder="Buscar por nombre"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
+        <div className="w-[90%] mx-auto h-[40vh] overflow-y-auto ">
           {filteredData.length > 0 ? (
             filteredData.map((item) => (
               <SidebarFormCard key={item.id} {...item} />
@@ -105,7 +105,7 @@ const Sidebar = ({}: SidebarProps) => {
           )}
         </div>
 
-        <Button asChild className=" bg-aiBlue-200 w-[40%] mr-auto mx-4 mt-auto">
+        <Button asChild className=" bg-aiBlue-200 w-[40%] mr-auto mx-4 mt-auto ">
           <div className="flex items-start gap-3">
             <CiLogout size={24} />
             <Link href="/myForms">Logout</Link>
