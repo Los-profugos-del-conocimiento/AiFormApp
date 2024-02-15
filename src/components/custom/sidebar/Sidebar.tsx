@@ -7,6 +7,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { BsEmojiSunglasses } from "react-icons/bs";
+import { CiLogout } from "react-icons/ci";
+import SidebarFormCard from "./SidebarFormCard";
 
 
 import { useMediaQuery } from "react-responsive";
@@ -20,6 +22,34 @@ const Sidebar = ({}: SidebarProps) => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const mockData = [
+    {
+      id: "quiz-1",
+      title: "Ultimate Programming Trivia",
+      type: "Quiz",
+    },
+    {
+      id: "survey-2",
+      title: "Customer Satisfaction Survey",
+      type: "Survey",
+    },
+    {
+      id: "quiz-3",
+      title: "History Through the Ages",
+      type: "Quiz",
+    },
+    {
+      id: "survey-4",
+      title: "Movie Preferences Survey",
+      type: "Survey",
+    },
+    {
+      id: "quiz-5",
+      title: "Science Challenge",
+      type: "Quiz",
+    },
+  ];
+
   return (
     <div
       className={`${
@@ -29,7 +59,7 @@ const Sidebar = ({}: SidebarProps) => {
       {/* Sidebar */}
 
       <div
-        className={`${isSidebarOpen ? "block " : ""} p flex flex-col gap-6 `}
+        className={`${isSidebarOpen ? "block " : "hidden"} p flex flex-col gap-6 `}
       >
         <Image src={aiLogo} alt="AI Logo"></Image>
         <Button asChild className=" bg-aiBlue-200 w-[60%] mx-auto">
@@ -42,6 +72,19 @@ const Sidebar = ({}: SidebarProps) => {
           <div className="flex items-start gap-3">
             <BsEmojiSunglasses size={24} />
             <Link href="/myForms">View my forms</Link>
+          </div>
+        </Button>
+
+        <div>
+          {mockData.map((item) => (
+            <SidebarFormCard key={item.id} {...item} />
+          ))}
+        </div>
+
+        <Button asChild className=" bg-aiBlue-200 w-[40%] mr-auto mx-4 mt-auto">
+          <div className="flex items-start gap-3">
+            <CiLogout size={24} />
+            <Link href="/myForms">Logout</Link>
           </div>
         </Button>
       </div>
