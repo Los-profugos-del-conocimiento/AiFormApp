@@ -7,11 +7,20 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { BsEmojiSunglasses } from "react-icons/bs";
+import { RxCross1 } from "react-icons/rx";
 import { CiLogout } from "react-icons/ci";
 import SidebarFormCard from "./SidebarFormCard";
 import { Input } from "@/components/ui/input";
 
 import { useMediaQuery } from "react-responsive";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
 
 interface SidebarProps {}
 
@@ -50,6 +59,16 @@ const Sidebar = ({}: SidebarProps) => {
       title: "Science Challenge",
       type: "Quiz",
     },
+    {
+      id: "quiz-6",
+      title: "Science Challenge",
+      type: "Quiz",
+    },
+    {
+      id: "quiz-7",
+      title: "Science Challenge",
+      type: "Quiz",
+    },
   ];
 
   useEffect(() => {
@@ -75,27 +94,34 @@ const Sidebar = ({}: SidebarProps) => {
         } p flex flex-col gap-6 h-full `}
       >
         <Image src={aiLogo} alt="AI Logo"></Image>
-        <Button asChild className=" bg-aiBlue-200 w-[60%] mx-auto">
-          <div className="flex justify-start gap-3">
-            <IoIosAddCircleOutline size={24} />
-            <Link href="/home">{isSidebarOpen ? "New Form" : ""}</Link>
-          </div>
-        </Button>
-        <Button asChild className=" bg-aiBlue-200 w-[60%] mx-auto">
-          <div className="flex items-start gap-3">
-            <BsEmojiSunglasses size={24} />
-            <Link href="/myForms">View my forms</Link>
-          </div>
-        </Button>
+        <div className="flex flex-row justify-between p-2">
+          <Button
+            asChild
+            className=" w-[50%]  bg-slate-700 hover:bg-slate-500 p-0"
+          >
+            <div className="flex justify-start ">
+              <IoIosAddCircleOutline size={24} />
+              <Link href="/home">New Form</Link>
+            </div>
+          </Button>
+          <Button
+            asChild
+            className=" w-[50%]  bg-slate-700 hover:bg-slate-500 p-0"
+          >
+            <div className="flex items-start ">
+              <BsEmojiSunglasses size={24} />
+              <Link href="/myForms">My forms</Link>
+            </div>
+          </Button>
+        </div>
 
         <Input
-            type="text"
-            placeholder="Buscar por nombre"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-
-        <div className="w-[90%] mx-auto h-[40vh] overflow-y-auto ">
+          type="search"
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder=" Busca por nombre"
+          className="w-[90%] mx-auto h-7 border-0 bg-slate-700 placeholder:text-slate-300 border-b border-slate-300 text-slate-100 rounded-none checked:border-0"
+        />
+        <div className="w-[90%] mx-auto h-[50vh] overflow-y-auto pr-3">
           {filteredData.length > 0 ? (
             filteredData.map((item) => (
               <SidebarFormCard key={item.id} {...item} />
@@ -105,18 +131,36 @@ const Sidebar = ({}: SidebarProps) => {
           )}
         </div>
 
-        <Button asChild className=" bg-aiBlue-200 w-[40%] mr-auto mx-4 mt-auto ">
-          <div className="flex items-start gap-3">
+        <DropdownMenu >
+          <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+          <DropdownMenuContent className="bg-white">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Billing</DropdownMenuItem>
+            <DropdownMenuItem>Team</DropdownMenuItem>
+            <DropdownMenuItem>Subscription</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <Button
+          className=" w-[50%]  bg-slate-700 hover:bg-slate-500 p-0"
+        >
             <CiLogout size={24} />
-            <Link href="/myForms">Logout</Link>
-          </div>
+            Cerrar sesión
         </Button>
       </div>
       {/* Menu Icon */}
       <div className="absolute top-2 left-2 ">
         <button onClick={toggleSidebar}>
-          <IoIosMenu className="text-2xl z-10" />
+          <IoIosMenu size={30} className="text-2xl z-10" />
         </button>
+        {/* <Button asChild className=" bg-aiBlue-200 w-fit p-1">
+          <div className="">
+            <IoIosAddCircleOutline size={24} className="px-0" />
+            <Link href="/home"></Link>
+          </div>
+        </Button> */}
       </div>
     </div>
   );
