@@ -6,7 +6,7 @@ import aiLogo from "@/app/images/aiLogo.jpg";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { BsEmojiSunglasses } from "react-icons/bs";
+import { BiListOl } from "react-icons/bi";
 import { RxCross1 } from "react-icons/rx";
 import { CiLogout } from "react-icons/ci";
 import SidebarFormCard from "./SidebarFormCard";
@@ -21,6 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
+import LogoutModal from "@/components/modals/sidebar/LogoutModal";
 
 interface SidebarProps {}
 
@@ -28,6 +29,7 @@ const Sidebar = ({}: SidebarProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState<any[]>([]);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -81,88 +83,108 @@ const Sidebar = ({}: SidebarProps) => {
   }, [searchTerm]);
 
   return (
-    <div
-      className={`${
-        isSidebarOpen ? " md:w-[20vw] w-[70vw] " : "w-0 lg:w-12"
-      } lg:block bg-slate-700  relative`}
-    >
-      {/* Sidebar */}
-
+    <>
       <div
         className={`${
-          isSidebarOpen ? "block " : "hidden"
-        } p flex flex-col gap-6 h-full `}
+          isSidebarOpen ? " md:w-[20vw] w-[70vw] " : "w-0 lg:w-12"
+        } lg:block bg-slate-700  relative `}
       >
-        <Image src={aiLogo} alt="AI Logo"></Image>
-        <div className="flex flex-row justify-between p-2">
-          <Button
-            asChild
-            className=" w-[50%]  bg-slate-700 hover:bg-slate-500 p-0"
-          >
-            <div className="flex justify-start ">
-              <IoIosAddCircleOutline size={24} />
-              <Link href="/home">New Form</Link>
-            </div>
-          </Button>
-          <Button
-            asChild
-            className=" w-[50%]  bg-slate-700 hover:bg-slate-500 p-0"
-          >
-            <div className="flex items-start ">
-              <BsEmojiSunglasses size={24} />
-              <Link href="/myForms">My forms</Link>
-            </div>
-          </Button>
-        </div>
+        {/* Sidebar */}
 
-        <Input
-          type="search"
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder=" Busca por nombre"
-          className="w-[90%] mx-auto h-7 border-0 bg-slate-700 placeholder:text-slate-300 border-b border-slate-300 text-slate-100 rounded-none checked:border-0"
-        />
-        <div className="w-[90%] mx-auto h-[50vh] overflow-y-auto pr-3">
-          {filteredData.length > 0 ? (
-            filteredData.map((item) => (
-              <SidebarFormCard key={item.id} {...item} />
-            ))
-          ) : (
-            <span className="text-gray-400 text-sm mt-4">No results found</span>
-          )}
-        </div>
-
-        <DropdownMenu >
-          <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-white">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <Button
-          className=" w-[50%]  bg-slate-700 hover:bg-slate-500 p-0"
+        <div
+          className={`${
+            isSidebarOpen ? "block " : "hidden"
+          } p flex flex-col h-full p-4 `}
         >
+          <Image
+            src={aiLogo}
+            alt="AiForm Logo"
+            className="w-[80%] h-[7vh] ml-auto"
+          />
+          <div className="flex flex-row justify-between h-fit mt-4">
+            <Button
+              asChild
+              className=" w-[50%]  bg-slate-700 hover:bg-slate-500 p-0"
+            >
+              <div className="flex justify-start ">
+                <IoIosAddCircleOutline size={24} />
+                <Link href="/home">New Form</Link>
+              </div>
+            </Button>
+            <Button
+              asChild
+              className=" w-[50%]  bg-slate-700 hover:bg-slate-500 p-0"
+            >
+              <div className="flex items-start ">
+                <BiListOl size={28} />
+                <Link href="/myForms">My forms</Link>
+              </div>
+            </Button>
+          </div>
+
+          <div className="w-[100%] mx-auto flex flex-row bg-slate-700">
+          <Input
+            type="text"
+            onChange={(e) => setSearchTerm(e.target.value)}
+            value={searchTerm}
+            placeholder=" Busca por nombre"
+            className="w-[90%] mx-auto h-7 border-0 bg-slate-700 placeholder-text-slate-300 border-b border-slate-300 text-slate-100 rounded-none "
+            style={{ outline: "none", boxShadow: "none" }}
+          />
+          <Button className="m-0 -ml-4 p-0 bg-slate-700 border-b-300 hover:bg-slate-700 text-red-600 border-b border-slate-300  h-7 rounded-none" onClick={() => setSearchTerm("")}>
+            {searchTerm && "X"}
+          </Button>
+          </div>
+          <div className="w-[90%] mx-auto h-[50vh] overflow-y-auto pr-3">
+            {filteredData.length > 0 ? (
+              filteredData.map((item) => (
+                <SidebarFormCard key={item.id} {...item} />
+              ))
+            ) : (
+              <span className="text-gray-400 text-sm mt-4">
+                No results found
+              </span>
+            )}
+          </div>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-white">
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Billing</DropdownMenuItem>
+              <DropdownMenuItem>Team</DropdownMenuItem>
+              <DropdownMenuItem>Subscription</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Button
+            className=" w-[50%]  bg-slate-700 hover:bg-slate-500 p-0"
+            onClick={() => setIsLogoutModalOpen(true)}
+          >
             <CiLogout size={24} />
             Cerrar sesión
-        </Button>
+          </Button>
+        </div>
+        {/* Menu Icon */}
+        <div className="absolute top-2 left-2 ">
+          <button onClick={toggleSidebar}>
+            <IoIosMenu size={30} className="text-2xl z-10" />
+          </button>
+          {/* <Button asChild className=" bg-aiBlue-200 w-fit p-1">
+            <div className="">
+              <IoIosAddCircleOutline size={24} className="px-0" />
+              <Link href="/home"></Link>
+            </div>
+          </Button> */}
+        </div>
       </div>
-      {/* Menu Icon */}
-      <div className="absolute top-2 left-2 ">
-        <button onClick={toggleSidebar}>
-          <IoIosMenu size={30} className="text-2xl z-10" />
-        </button>
-        {/* <Button asChild className=" bg-aiBlue-200 w-fit p-1">
-          <div className="">
-            <IoIosAddCircleOutline size={24} className="px-0" />
-            <Link href="/home"></Link>
-          </div>
-        </Button> */}
-      </div>
-    </div>
+      <LogoutModal
+        isOpen={isLogoutModalOpen}
+        onClose={() => setIsLogoutModalOpen(false)}
+      />
+    </>
   );
 };
 
