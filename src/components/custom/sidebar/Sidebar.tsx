@@ -7,20 +7,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { BiListOl } from "react-icons/bi";
-import { RxCross1 } from "react-icons/rx";
 import { CiLogout } from "react-icons/ci";
 import SidebarFormCard from "./SidebarFormCard";
 import { Input } from "@/components/ui/input";
-
 import { useMediaQuery } from "react-responsive";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
 import LogoutModal from "@/components/modals/sidebar/LogoutModal";
 
 interface SidebarProps {}
@@ -86,7 +76,7 @@ const Sidebar = ({}: SidebarProps) => {
     <>
       <div
         className={`${
-          isSidebarOpen ? " md:w-[20vw] w-[70vw] " : "w-0 lg:w-12"
+          isSidebarOpen ? " w-[100vw] md:w-[30vw] lg:w-[20vw] " : "w-0 lg:w-12"
         } lg:block bg-slate-700  relative `}
       >
         {/* Sidebar */}
@@ -121,21 +111,23 @@ const Sidebar = ({}: SidebarProps) => {
               </div>
             </Button>
           </div>
-
           <div className="w-[100%] mx-auto flex flex-row bg-slate-700">
-          <Input
-            type="text"
-            onChange={(e) => setSearchTerm(e.target.value)}
-            value={searchTerm}
-            placeholder=" Busca por nombre"
-            className="w-[90%] mx-auto h-7 border-0 bg-slate-700 placeholder-text-slate-300 border-b border-slate-300 text-slate-100 rounded-none "
-            style={{ outline: "none", boxShadow: "none" }}
-          />
-          <Button className="m-0 -ml-4 p-0 bg-slate-700 border-b-300 hover:bg-slate-700 text-red-600 border-b border-slate-300  h-7 rounded-none" onClick={() => setSearchTerm("")}>
-            {searchTerm && "X"}
-          </Button>
+            <Input
+              type="text"
+              onChange={(e) => setSearchTerm(e.target.value)}
+              value={searchTerm}
+              placeholder=" Busca por nombre"
+              className="w-[90%] mx-auto h-7 border-0 bg-slate-700 placeholder-text-slate-300 border-b border-slate-300 text-slate-100 rounded-none "
+              style={{ outline: "none", boxShadow: "none" }}
+            />
+            <Button
+              className="m-0 -ml-4 p-0 bg-slate-700 border-b-300 hover:bg-slate-700 text-red-600 border-b border-slate-300  h-7 rounded-none"
+              onClick={() => setSearchTerm("")}
+            >
+              {searchTerm && "X"}
+            </Button>
           </div>
-          <div className="w-[90%] mx-auto h-[50vh] overflow-y-auto pr-3">
+          <div className="w-[100%] mx-auto h-full overflow-y-auto pr-3 mt-4">
             {filteredData.length > 0 ? (
               filteredData.map((item) => (
                 <SidebarFormCard key={item.id} {...item} />
@@ -146,19 +138,6 @@ const Sidebar = ({}: SidebarProps) => {
               </span>
             )}
           </div>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger>Open</DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Billing</DropdownMenuItem>
-              <DropdownMenuItem>Team</DropdownMenuItem>
-              <DropdownMenuItem>Subscription</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
           <Button
             className=" w-[50%]  bg-slate-700 hover:bg-slate-500 p-0"
             onClick={() => setIsLogoutModalOpen(true)}
