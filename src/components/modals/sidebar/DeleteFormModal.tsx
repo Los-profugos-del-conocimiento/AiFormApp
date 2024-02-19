@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { IoMdClose } from "react-icons/io";
 
-interface LogoutModalProps {
+interface DeleteFormModalProps {
   isOpen: boolean;
+  title: string;
   onClose: () => void;
 }
-const LogoutModal = ({ isOpen, onClose }: LogoutModalProps) => {
+const DeleteFormModal = ({ isOpen, onClose, title }: DeleteFormModalProps) => {
   if (!isOpen) return null;
 
   return (
@@ -20,10 +21,10 @@ const LogoutModal = ({ isOpen, onClose }: LogoutModalProps) => {
             <IoMdClose size={24} className="text-red-500" />
           </Button>
         </div>
-        <h3 className="mb-4">¿Estás seguro de cerrar sesión?</h3>
-        <div className="flex flex-col md:flex-row justify-between gap-4 px-4 mt-4 ">
+        <h3 className="mb-4">¿Estás seguro de eliminar el formulario &quot;{title}?</h3>
+        <div className="flex flex-col md:flex-row justify-between gap-4 px-4 mt-4 md:justify-end ">
         <Button onClick={onClose} variant={"ghost"} className=" bg-red-500 hover:bg-red-00">
-            Sí, Cerrar sesión
+            Sí, Eliminar
           </Button>
           <Button onClick={onClose} variant={"ghost"} className=" underline hover:bg-slate-300">
             Cancelar
@@ -34,4 +35,4 @@ const LogoutModal = ({ isOpen, onClose }: LogoutModalProps) => {
   );
 };
 
-export default LogoutModal;
+export default DeleteFormModal;
