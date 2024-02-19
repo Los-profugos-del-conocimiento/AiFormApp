@@ -22,9 +22,10 @@ interface SidebarFormCardProps {
   id: string;
   title: string;
   type: string;
+  handleCloseSidebarMobile?: () => void;
 }
 
-const SidebarFormCard = ({ id, title, type }: SidebarFormCardProps) => {
+const SidebarFormCard = ({ id, title, type, handleCloseSidebarMobile }: SidebarFormCardProps) => {
 
   // Define the icon based on the type
   let IconComponent;
@@ -39,7 +40,7 @@ const SidebarFormCard = ({ id, title, type }: SidebarFormCardProps) => {
 
   return (
     <div className="w-full flex flex-row">
-      <Link href={`/myForms/${id}`} passHref style={{display: 'inline-block'}}>
+      <Link href={`/myForms/${id}`} passHref style={{display: 'inline-block'}} onClick={handleCloseSidebarMobile}>
         <div className="flex items-center bg-slate-700 w-[40vw] lg:w-[15vw] px-4 py-2 rounded-md hover:bg-slate-500 cursor-pointer">
           {IconComponent && (
             <IconComponent size={20} className="text-gray-400 mr-2" />

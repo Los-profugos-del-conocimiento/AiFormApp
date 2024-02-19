@@ -20,10 +20,18 @@ const Sidebar = ({}: SidebarProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredData, setFilteredData] = useState<any[]>([]);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const isMobile = useMediaQuery({ maxWidth: 640 });
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const handleCloseSidebarMobile = () => {
+    if (isMobile) {
+      // Close the sidebar on mobile
+      setIsSidebarOpen(false);
+    }
+  }
 
   const mockData = [
     {
@@ -94,20 +102,22 @@ const Sidebar = ({}: SidebarProps) => {
           <div className="flex flex-row justify-between h-fit mt-4">
             <Button
               asChild
-              className=" w-[50%]  bg-slate-700 hover:bg-slate-500 p-0"
+              className=" w-fit  bg-slate-700 hover:bg-slate-500 p-2"
+              onClick={handleCloseSidebarMobile}
             >
               <div className="flex justify-start ">
                 <IoIosAddCircleOutline size={24} />
-                <Link href="/home">New Form</Link>
+                <Link href="/home">Crear</Link>
               </div>
             </Button>
             <Button
               asChild
-              className=" w-[50%]  bg-slate-700 hover:bg-slate-500 p-0"
+              className=" w-fit  bg-slate-700 hover:bg-slate-500 p-2"
+              onClick={handleCloseSidebarMobile}
             >
               <div className="flex items-start ">
                 <BiListOl size={28} />
-                <Link href="/myForms">My forms</Link>
+                <Link href="/myForms">Mis formularios</Link>
               </div>
             </Button>
           </div>
@@ -130,7 +140,7 @@ const Sidebar = ({}: SidebarProps) => {
           <div className="w-[100%] mx-auto h-full overflow-y-auto pr-3 mt-4">
             {filteredData.length > 0 ? (
               filteredData.map((item) => (
-                <SidebarFormCard key={item.id} {...item} />
+                <SidebarFormCard key={item.id} {...item} handleCloseSidebarMobile={handleCloseSidebarMobile} />
               ))
             ) : (
               <span className="text-gray-400 text-sm mt-4">
@@ -139,7 +149,7 @@ const Sidebar = ({}: SidebarProps) => {
             )}
           </div>
           <Button
-            className=" w-[50%]  bg-slate-700 hover:bg-slate-500 p-0"
+            className=" w-fit  bg-slate-700 hover:bg-slate-500 p-0"
             onClick={() => setIsLogoutModalOpen(true)}
           >
             <CiLogout size={24} />
