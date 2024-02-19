@@ -21,6 +21,7 @@ const Sidebar = ({}: SidebarProps) => {
   const [filteredData, setFilteredData] = useState<any[]>([]);
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 640 });
+  const isDesktop = useMediaQuery({ minWidth: 1024 });
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -31,7 +32,7 @@ const Sidebar = ({}: SidebarProps) => {
       // Close the sidebar on mobile
       setIsSidebarOpen(false);
     }
-  }
+  };
 
   const mockData = [
     {
@@ -84,8 +85,8 @@ const Sidebar = ({}: SidebarProps) => {
     <>
       <div
         className={`${
-          isSidebarOpen ? " w-[100vw] md:w-[30vw] lg:w-[20vw] " : "w-0 lg:w-12"
-        } lg:block bg-slate-700  relative `}
+          isSidebarOpen ? " w-[100vw] md:w-[30vw] lg:w-[20vw] " : "w-0 sm:w-12"
+        } md:block bg-slate-700  relative `}
       >
         {/* Sidebar */}
 
@@ -105,20 +106,20 @@ const Sidebar = ({}: SidebarProps) => {
               className=" w-fit  bg-slate-700 hover:bg-slate-500 p-2"
               onClick={handleCloseSidebarMobile}
             >
-              <div className="flex justify-start ">
+              <Link href="/home">
                 <IoIosAddCircleOutline size={24} />
-                <Link href="/home">Crear</Link>
-              </div>
+                Crear
+              </Link>
             </Button>
             <Button
               asChild
               className=" w-fit  bg-slate-700 hover:bg-slate-500 p-2"
               onClick={handleCloseSidebarMobile}
             >
-              <div className="flex items-start ">
+              <Link href="/myForms">
                 <BiListOl size={28} />
-                <Link href="/myForms">Mis formularios</Link>
-              </div>
+                Mis formularios
+              </Link>
             </Button>
           </div>
           <div className="w-[100%] mx-auto flex flex-row bg-slate-700">
@@ -140,7 +141,11 @@ const Sidebar = ({}: SidebarProps) => {
           <div className="w-[100%] mx-auto h-full overflow-y-auto pr-3 mt-4">
             {filteredData.length > 0 ? (
               filteredData.map((item) => (
-                <SidebarFormCard key={item.id} {...item} handleCloseSidebarMobile={handleCloseSidebarMobile} />
+                <SidebarFormCard
+                  key={item.id}
+                  {...item}
+                  handleCloseSidebarMobile={handleCloseSidebarMobile}
+                />
               ))
             ) : (
               <span className="text-gray-400 text-sm mt-4">
@@ -157,16 +162,38 @@ const Sidebar = ({}: SidebarProps) => {
           </Button>
         </div>
         {/* Menu Icon */}
-        <div className="absolute top-2 left-2 ">
-          <button onClick={toggleSidebar}>
+        <div className="absolute top-2 left-2 h-[98vh] flex flex-col  ">
+          <Button
+            onClick={toggleSidebar}
+            className={`p-0 m-0 w-fit ${
+              isMobile ? "bg-slate-500" : "bg-slate-700"
+            } ${isSidebarOpen && "bg-slate-700"} hover:bg-slate-500 text-black`}
+          >
             <IoIosMenu size={30} className="text-2xl z-10" />
-          </button>
-          {/* <Button asChild className=" bg-aiBlue-200 w-fit p-1">
-            <div className="">
-              <IoIosAddCircleOutline size={24} className="px-0" />
-              <Link href="/home"></Link>
+          </Button>
+          {!isSidebarOpen && !isMobile && (
+            <div className="flex flex-col justify-between h-screen">
+              <div>
+                <Button asChild className="bg-slate-700 w-fit p-1">
+                  <Link href="/home">
+                    <IoIosAddCircleOutline size={26} className="px-0" />
+                  </Link>
+                </Button>
+
+                <Button asChild className=" bg-slate-700 w-fit p-1">
+                  <Link href="/myForms">
+                    <BiListOl size={26} className="px-0" />
+                  </Link>
+                </Button>
+              </div>
+              <Button asChild className=" bg-slate-700 w-fit mb-4 mx-0 p-1">
+                <div className="">
+                  <CiLogout size={26} className="px-0" />
+                  <Link href="/myForms"></Link>
+                </div>
+              </Button>
             </div>
-          </Button> */}
+          )}
         </div>
       </div>
       <LogoutModal
