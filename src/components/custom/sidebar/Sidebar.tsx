@@ -85,7 +85,7 @@ const Sidebar = ({}: SidebarProps) => {
     <>
       <div
         className={`${
-          isSidebarOpen ? " w-[100vw] md:w-[30vw] lg:w-[20vw] " : "w-0 sm:w-12"
+          isSidebarOpen ? " w-[100vw] md:w-[34vw] lg:w-[20vw] " : "w-0 sm:w-12"
         } md:block bg-slate-700  relative `}
       >
         {/* Sidebar */}
@@ -107,7 +107,7 @@ const Sidebar = ({}: SidebarProps) => {
               onClick={handleCloseSidebarMobile}
             >
               <Link href="/home">
-                <IoIosAddCircleOutline size={24} />
+                <IoIosAddCircleOutline size={24} className="mr-1" />
                 Crear
               </Link>
             </Button>
@@ -117,7 +117,7 @@ const Sidebar = ({}: SidebarProps) => {
               onClick={handleCloseSidebarMobile}
             >
               <Link href="/myForms">
-                <BiListOl size={28} />
+                <BiListOl size={28} className="mr-1" />
                 Mis formularios
               </Link>
             </Button>
@@ -128,7 +128,7 @@ const Sidebar = ({}: SidebarProps) => {
               onChange={(e) => setSearchTerm(e.target.value)}
               value={searchTerm}
               placeholder=" Busca por nombre"
-              className="w-[90%] mx-auto h-7 border-0 bg-slate-700 placeholder-text-slate-300 border-b border-slate-300 text-slate-100 rounded-none "
+              className="w-[90%] mx-auto h-7 border-0 bg-slate-700 placeholder:text-slate-300 border-b border-slate-300 text-slate-100 rounded-none "
               style={{ outline: "none", boxShadow: "none" }}
             />
             <Button
@@ -157,7 +157,7 @@ const Sidebar = ({}: SidebarProps) => {
             className=" w-fit  bg-slate-700 hover:bg-slate-500 p-0"
             onClick={() => setIsLogoutModalOpen(true)}
           >
-            <CiLogout size={24} />
+            <CiLogout size={24} className="mr-2" />
             Cerrar sesión
           </Button>
         </div>
@@ -172,7 +172,7 @@ const Sidebar = ({}: SidebarProps) => {
             <IoIosMenu size={30} className="text-2xl z-10" />
           </Button>
           {!isSidebarOpen && !isMobile && (
-            <div className="flex flex-col justify-between h-screen">
+            <div className="flex flex-col justify-between h-screen mt-6">
               <div>
                 <Button asChild className="bg-slate-700 w-fit p-1">
                   <Link href="/home">
@@ -187,10 +187,9 @@ const Sidebar = ({}: SidebarProps) => {
                 </Button>
               </div>
               <Button asChild className=" bg-slate-700 w-fit mb-4 mx-0 p-1">
-                <div className="">
+                <Link href="/myForms">
                   <CiLogout size={26} className="px-0" />
-                  <Link href="/myForms"></Link>
-                </div>
+                </Link>
               </Button>
             </div>
           )}
