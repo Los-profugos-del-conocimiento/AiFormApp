@@ -8,7 +8,7 @@ interface UseAxiosOptions<T> extends AxiosRequestConfig {
   requestData?: T;
 }
 
-const useAxios = <T = unknown, R = unknown>({ url, method = 'get', requestData, ...axiosConfig }: UseAxiosOptions<T>) => {
+const useAxios = <T = unknown, R = []>({ url, method = 'get', requestData, ...axiosConfig }: UseAxiosOptions<T>) => {
   const [data, setData] = useState<R | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

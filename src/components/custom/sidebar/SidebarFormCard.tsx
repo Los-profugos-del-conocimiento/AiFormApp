@@ -90,9 +90,9 @@ const handleToggleEdit = () => {
 
   // Define the icon based on the type
   let IconComponent;
-  if (type === "Quiz") {
+  if (type === "quiz") {
     IconComponent = MdOutlineQuiz;
-  } else if (type === "Survey") {
+  } else if (type === "survey") {
     IconComponent = RiSurveyLine;
   } else {
     // Default icon if type is neither 'Quiz' nor 'Survey'

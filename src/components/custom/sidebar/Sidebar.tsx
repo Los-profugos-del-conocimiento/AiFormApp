@@ -13,6 +13,9 @@ import { Input } from "@/components/ui/input";
 import { useMediaQuery } from "react-responsive";
 import LogoutModal from "@/components/modals/sidebar/LogoutModal";
 
+import { Form } from "@/interfaces/IForm";
+import useAxios from "@/hooks/useAxios";
+
 interface SidebarProps {}
 
 const Sidebar = ({}: SidebarProps) => {
@@ -34,52 +37,22 @@ const Sidebar = ({}: SidebarProps) => {
     }
   };
 
-  const mockData = [
-    {
-      id: "quiz-1",
-      title: "Ultimate Programming Trivia",
-      type: "Quiz",
-    },
-    {
-      id: "survey-2",
-      title: "Customer Satisfaction Survey",
-      type: "Survey",
-    },
-    {
-      id: "quiz-3",
-      title: "History Through the Ages",
-      type: "Quiz",
-    },
-    {
-      id: "survey-4",
-      title: "Movie Preferences Survey",
-      type: "Survey",
-    },
-    {
-      id: "quiz-5",
-      title: "Science Challenge",
-      type: "Quiz",
-    },
-    {
-      id: "quiz-6",
-      title: "Science Challenge",
-      type: "Quiz",
-    },
-    {
-      id: "quiz-7",
-      title: "Science Challenge",
-      type: "Quiz",
-    },
-  ];
+  const { data : formData, loading, error } = useAxios<Form>({
+    url: 'http://localhost:3000/form',
+    method: 'get'
+  });
 
+ 
   useEffect(() => {
-    const normalizedSearchTerm = searchTerm.toLowerCase();
-    const filteredItems = mockData.filter((item) => {
-      const normalizedTitle = item.title.toLowerCase();
-      return normalizedTitle.includes(normalizedSearchTerm);
-    });
-    setFilteredData(filteredItems);
-  }, [searchTerm]);
+    if ( formData !== null) { // Check if data is not null
+      const normalizedSearchTerm = searchTerm.toLowerCase();
+      const filteredItems = formData.filter((item: Form) => { // Explicitly type 'item'
+        const normalizedTitle = item.title.toLowerCase();
+        return normalizedTitle.includes(normalizedSearchTerm);
+      });
+      setFilteredData(filteredItems);
+    }
+  }, [searchTerm, formData]);;
 
   return (
     <>
