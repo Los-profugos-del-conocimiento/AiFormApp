@@ -1,14 +1,19 @@
-import { useState, useEffect } from 'react';
-import axios, { AxiosRequestConfig } from 'axios';
+import { useState, useEffect } from "react";
+import axios, { AxiosRequestConfig } from "axios";
 
 // Define a type for the hook options, including method and data
 interface UseAxiosOptions<T> extends AxiosRequestConfig {
   url: string;
-  method?: 'get' | 'post' | 'delete' | 'patch' | 'put';
+  method?: "get" | "post" | "delete" | "patch" | "put";
   requestData?: T;
 }
 
-const useAxios = <T = unknown, R = []>({ url, method = 'get', requestData, ...axiosConfig }: UseAxiosOptions<T>) => {
+const useAxios = <T = unknown, R = []>({
+  url,
+  method = "get",
+  requestData,
+  ...axiosConfig
+}: UseAxiosOptions<T>) => {
   const [data, setData] = useState<R | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -25,12 +30,12 @@ const useAxios = <T = unknown, R = []>({ url, method = 'get', requestData, ...ax
     };
 
     axios(requestConfig)
-      .then(response => {
+      .then((response) => {
         setData(response.data);
         setError(null);
       })
-      .catch(error => {
-        setError(error.message || 'An error occurred');
+      .catch((error) => {
+        setError(error.message || "An error occurred");
         setData(null);
       })
       .finally(() => setLoading(false));

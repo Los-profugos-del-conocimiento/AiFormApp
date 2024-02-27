@@ -4,10 +4,22 @@ export interface Form {
   title: string;
   prompt: string;
   questions: number;
-  answerTypes: string[];
+  answerTypes: AnswerType[];
   difficulty: number;
   googleFormsUrl?: any;
   items: FormItem[];
+}
+
+enum AnswerType {
+  radio = "radio",
+  checkbox = "checkbox",
+  drop_down = "drop_down",
+  text = "text",
+  scale = "scale",
+  date = "date",
+  time = "time",
+  // file = 'file',
+  // row = 'row'
 }
 
 interface FormItem {
@@ -15,7 +27,7 @@ interface FormItem {
   itemId?: any;
   question: string;
   description?: any;
-  answerType: string;
+  answerType: AnswerType;
   answers: FormAnswer[];
 }
 

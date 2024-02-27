@@ -15,6 +15,7 @@ import LogoutModal from "@/components/modals/sidebar/LogoutModal";
 
 import { Form } from "@/interfaces/IForm";
 import useAxios from "@/hooks/useAxios";
+import AlertBox from "../AlertBox";
 
 interface SidebarProps {}
 
@@ -172,6 +173,7 @@ const Sidebar = ({}: SidebarProps) => {
         isOpen={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}
       />
+      {error && <AlertBox type="error" message={error} />}
     </>
   );
 };
