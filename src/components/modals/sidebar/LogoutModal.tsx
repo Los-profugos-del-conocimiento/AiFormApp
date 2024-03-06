@@ -4,8 +4,9 @@ import { IoMdClose } from "react-icons/io";
 interface LogoutModalProps {
   isOpen: boolean;
   onClose: () => void;
+  signOut: () => void;
 }
-const LogoutModal = ({ isOpen, onClose }: LogoutModalProps) => {
+const LogoutModal = ({ isOpen, onClose, signOut }: LogoutModalProps) => {
   if (!isOpen) return null;
 
   return (
@@ -22,7 +23,7 @@ const LogoutModal = ({ isOpen, onClose }: LogoutModalProps) => {
         </div>
         <h3 className="mb-4">¿Estás seguro de cerrar sesión?</h3>
         <div className="flex flex-col md:flex-row justify-between gap-4 px-4 mt-4 ">
-        <Button onClick={onClose} variant={"ghost"} className=" bg-red-500 hover:bg-red-00">
+        <Button onClick={() => {onClose(); signOut()}} variant={"ghost"} className=" bg-red-500 hover:bg-red-00">
             Sí, Cerrar sesión
           </Button>
           <Button onClick={onClose} variant={"ghost"} className=" underline hover:bg-slate-300">
