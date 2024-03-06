@@ -55,6 +55,10 @@ export const authOptions: NextAuthOptions = {
       return true; // return false to restrict sign in
     },
 
+    async redirect({ url, baseUrl }) {
+      return "http://localhost:3001/api/auth/callback/google";
+    }
+
     // async jwt({ token, user, account, profile }) {
     //   const dbUser = await prisma.user.findUnique({
     //     where: { email: token.email! ?? "no-email" },
@@ -74,6 +78,14 @@ export const authOptions: NextAuthOptions = {
     //   return session;
     // },
   },
+
+  // pages: {
+    // signIn: '/auth/signin',
+    // signOut: '/auth/signout',
+    // error: '/auth/error', // Error code passed in query string as ?error=
+    // verifyRequest: '/auth/verify-request', // (used for check email message)
+    // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
+  // }
 };
 
 const handler = NextAuth(authOptions);
