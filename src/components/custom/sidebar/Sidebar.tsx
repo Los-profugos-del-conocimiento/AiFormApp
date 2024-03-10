@@ -164,10 +164,8 @@ const Sidebar = ({}: SidebarProps) => {
                   </Link>
                 </Button>
               </div>
-              <Button asChild className=" bg-slate-700 w-fit mb-4 mx-0 p-1" onClick={() => setIsLogoutModalOpen(true)}>
-                <Link href="/myForms">
+              <Button className=" bg-slate-700 w-fit mb-4 mx-0 p-1" onClick={() => setIsLogoutModalOpen(true)}>
                   <CiLogout size={26} className="px-0" />
-                </Link>
               </Button>
             </div>
           )}

@@ -1,45 +1,45 @@
-import type {
-    GetServerSidePropsContext,
-    InferGetServerSidePropsType,
-  } from "next"
-  import { getProviders, signIn } from "next-auth/react"
-  import { getServerSession } from "next-auth/next"
-  import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-  
-  export default function SignIn(
-  //   {
-  //   providers,
-  // }: InferGetServerSidePropsType<typeof getServerSideProps>
-  ) {
-    return (
-      <>
-        {/* {Object.values(providers).map((provider) => (
-          <div key={provider.name}>
-            <h1>HOLA HOLA</h1>
-            <button onClick={() => signIn(provider.id)}>
-              Sign in with {provider.name}
-            </button>
-          </div>
-        ))} */}
+"use client";
 
-        {/* <h1>HOLA JORDANO BANANO!</h1> */}
-      </>
-    )
-  }
-  
-  // export async function getServerSideProps(context: GetServerSidePropsContext) {
-  //   const session = await getServerSession(context.req, context.res, authOptions)
-  
-  //   // If the user is already logged in, redirect.
-  //   // Note: Make sure not to redirect to the same page
-  //   // To avoid an infinite loop!
-  //   if (session) {
-  //     return { redirect: { destination: "/home" } }
-  //   }
-  
-  //   const providers = await getProviders()
-  
-  //   return {
-  //     props: { providers: providers ?? [] },
-  //   }
-  // }
+import { signIn } from "next-auth/react";
+import Image from "next/image";
+import AiFormFull from "@/app/images/AiFormFull.jpg";
+import { Button } from "@/components/ui/button";
+import { FaGoogle } from "react-icons/fa";
+import Link from "next/link";
+
+export default function SignInPage() {
+  return (
+    <>
+      <div className="flex items-center justify-center min-h-screen bg-slate-500">
+        <div className="p-8 bg-slate-600 shadow-md rounded-lg w-[90vw] md:w-[40vw]">
+          <div className="flex flex-col items-center">
+            {/* Image Placeholder - Replace the src with your desired image */}
+            <Image
+              src={AiFormFull}
+              alt="AiForm Logo"
+              width={400}
+              height={400}
+              className="mb-4"
+            />
+
+            {/* Login Text */}
+            <p className="mb-4 text-center text-slate-200">
+              Antes de usar nuestra aplicación, inicia sesión para continuar.
+            </p>
+
+            {/* Google Sign-in Button */}
+            <Button
+              onClick={async () => await signIn("google")}
+              className="flex items-center justify-center px-4 py-2 mt-6 text-white bg-blue-500 rounded-md hover:bg-blue-600"
+            >
+              <FaGoogle size={24} className="mr-4"/>
+              Inicia sesión con Google
+            </Button>
+
+            <Link href="/" className="mt-4 text-sm hover:underline text-gray-950"> Cancelar </Link>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

@@ -15,77 +15,27 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          redirect_uri: "http://localhost:3001/api/auth/callback/google",
+        },
+      },
     }),
-
-    // CredentialsProvider({
-    //   name: "Credentials",
-    //   credentials: {
-    //     email: {
-    //       label: "Correo electrónico",
-    //       type: "email",
-    //       placeholder: "usuario@example.com",
-    //     },
-    //     password: { label: "Contraseña", type: "password" },
-    //   },
-
-    //   async authorize(credentials, req) {
-    //     //Add logic here to look up the user from the credentials supplied
-    //     const user = await signInEmailPassword(
-    //       credentials!.email,
-    //       credentials!.password
-    //     );
-
-    //     if (user) {
-    //       return user;
-    //     } else {
-    //       return null;
-    //     }
-    //   },
-    // }),
   ],
 
   session: {
     strategy: "jwt",
   },
 
-  callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
-      console.log({ user });
-
-      return true; // return false to restrict sign in
-    },
-
-    async redirect({ url, baseUrl }) {
-      return "http://localhost:3001/api/auth/callback/google";
-    }
-
-    // async jwt({ token, user, account, profile }) {
-    //   const dbUser = await prisma.user.findUnique({
-    //     where: { email: token.email! ?? "no-email" },
-    //   });
-    //   token.roles = dbUser?.roles ?? ["no-roles"];
-    //   token.id = dbUser?.id ?? "no-uuid";
-
-    //   return token;
-    // },
-
-    // async session({ session, token, user }) {
-    //   if (session && session.user) {
-    //     session.user.roles = token.roles;
-    //     session.user.id = token.id;
-    //   }
-
-    //   return session;
-    // },
-  },
-
-  // pages: {
-    // signIn: '/auth/signin',
+  pages: {
+    signIn: "/auth/signin",
     // signOut: '/auth/signout',
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // (used for check email message)
     // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
-  // }
+  },
 };
 
 const handler = NextAuth(authOptions);
