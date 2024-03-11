@@ -1,6 +1,5 @@
 "use client";
 
-import { signIn } from "next-auth/react";
 import Image from "next/image";
 import AiFormFull from "@/app/images/AiFormFull.jpg";
 import { Button } from "@/components/ui/button";
@@ -29,7 +28,7 @@ export default function SignInPage() {
 
             {/* Google Sign-in Button */}
             <Button
-              onClick={async () => await signIn("google")}
+              onClick={() => {}}
               className="flex items-center justify-center px-4 py-2 mt-6 text-white bg-blue-500 rounded-md hover:bg-blue-600"
             >
               <FaGoogle size={24} className="mr-4"/>

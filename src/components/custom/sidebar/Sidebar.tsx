@@ -17,8 +17,6 @@ import { Form } from "@/interfaces/IForm";
 import useAxios from "@/hooks/useAxios";
 import AlertBox from "../AlertBox";
 
-import { useSession, signOut, signIn } from "next-auth/react";
-
 interface SidebarProps {}
 
 const Sidebar = ({}: SidebarProps) => {
@@ -28,8 +26,6 @@ const Sidebar = ({}: SidebarProps) => {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 640 });
   const isDesktop = useMediaQuery({ minWidth: 1024 });
-
-  const { data: session, status } = useSession();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -174,7 +170,9 @@ const Sidebar = ({}: SidebarProps) => {
       <LogoutModal
         isOpen={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}
-        signOut = {signOut}
+        signOut = {() => {
+          
+        }}
       />
       {error && <AlertBox type="error" message={error} />}
     </>

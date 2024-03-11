@@ -1,10 +1,8 @@
 import Sidebar from "@/components/custom/sidebar/Sidebar";
 import { useAppSelector } from "@/store";
-import AuthProvider from "../auth/components/AuthProvider";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <AuthProvider>
       <div className="min-h-screen flex">
         <Sidebar />
         <main className="flex-1">
@@ -13,6 +11,5 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </main>
       </div>
-    </AuthProvider>
   );
 }
