@@ -16,6 +16,8 @@ import LogoutModal from "@/components/modals/sidebar/LogoutModal";
 import { Form } from "@/interfaces/IForm";
 import useAxios from "@/hooks/useAxios";
 import AlertBox from "../AlertBox";
+import { redirect } from "next/navigation";
+import useCheckUserSession from "@/hooks/useCheckUserSession";
 
 interface SidebarProps {}
 
@@ -27,6 +29,8 @@ const Sidebar = ({}: SidebarProps) => {
   const isMobile = useMediaQuery({ maxWidth: 640 });
   const isDesktop = useMediaQuery({ minWidth: 1024 });
 
+  useCheckUserSession();
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -37,9 +41,9 @@ const Sidebar = ({}: SidebarProps) => {
       setIsSidebarOpen(false);
     }
   };
-
-  const { data : formData, loading, error } = useAxios<Form>({
-    url: 'http://localhost:3000/form',
+  
+  const { data: formData, loading, error } = useAxios<Form>({
+    url: `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/form`,
     method: 'get'
   });
 
@@ -171,7 +175,7 @@ const Sidebar = ({}: SidebarProps) => {
         isOpen={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}
         signOut = {() => {
-          
+          redirect(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/auth/signout`);
         }}
       />
       {error && <AlertBox type="error" message={error} />}

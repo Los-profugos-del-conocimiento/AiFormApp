@@ -1,10 +1,16 @@
 import { redirect } from "next/navigation";
+import { cookies } from 'next/headers'
+import useCheckUserSession from "@/hooks/useCheckUserSession";
+
 export const metadata = {
   title: 'Nuevo Formulario',
   description: 'Pagina de nuevo formulario',
  };
 
-export default async function HomePage() {
+export default function HomePage() {
+
+  const cookieStore = cookies();
+  const token = cookieStore.get('aiform_token_420');
 
   return (
     <div className="flex justify-center  h-screen">
