@@ -175,7 +175,8 @@ const Sidebar = ({}: SidebarProps) => {
         isOpen={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}
         signOut = {() => {
-          redirect(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/auth/signout`);
+          // redirect(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/auth/logout`);
+          window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/auth/logout`;
         }}
       />
       {error && <AlertBox type="error" message={error} />}
