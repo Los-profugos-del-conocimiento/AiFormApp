@@ -29,7 +29,6 @@ const Sidebar = ({}: SidebarProps) => {
   const isMobile = useMediaQuery({ maxWidth: 640 });
   const isDesktop = useMediaQuery({ minWidth: 1024 });
 
-  useCheckUserSession();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);

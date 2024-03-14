@@ -9,8 +9,8 @@ export const metadata = {
 
 export default function HomePage() {
 
-  const cookieStore = cookies();
-  const token = cookieStore.get('aiform_token_420');
+  // const cookieStore = cookies();
+  // const token = cookieStore.get('aiform_token_420');
 
   return (
     <div className="flex justify-center  h-screen">
