@@ -29,7 +29,6 @@ const Sidebar = ({}: SidebarProps) => {
   const isMobile = useMediaQuery({ maxWidth: 640 });
   const isDesktop = useMediaQuery({ minWidth: 1024 });
 
-
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -40,23 +39,29 @@ const Sidebar = ({}: SidebarProps) => {
       setIsSidebarOpen(false);
     }
   };
-  
-  const { data: formData, loading, error } = useAxios<Form>({
+
+  const {
+    data: formData,
+    loading,
+    error,
+  } = useAxios<Form>({
     url: `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/form`,
-    method: 'get'
+    method: "get",
+    withCredentials: true,
   });
 
- 
   useEffect(() => {
-    if ( formData !== null) { // Check if data is not null
+    if (formData !== null) {
+      // Check if data is not null
       const normalizedSearchTerm = searchTerm.toLowerCase();
-      const filteredItems = formData.filter((item: Form) => { // Explicitly type 'item'
+      const filteredItems = formData.filter((item: Form) => {
+        // Explicitly type 'item'
         const normalizedTitle = item.title.toLowerCase();
         return normalizedTitle.includes(normalizedSearchTerm);
       });
       setFilteredData(filteredItems);
     }
-  }, [searchTerm, formData]);;
+  }, [searchTerm, formData]);
 
   return (
     <>
@@ -115,7 +120,7 @@ const Sidebar = ({}: SidebarProps) => {
               {searchTerm && "X"}
             </Button>
           </div>
-          <div className="w-[100%] mx-auto h-full overflow-y-auto pr-3 mt-4">
+          <div className="w-[100%] mx-auto h-full pr-3 mt-4">
             {filteredData.length > 0 ? (
               filteredData.map((item) => (
                 <SidebarFormCard
@@ -163,8 +168,11 @@ const Sidebar = ({}: SidebarProps) => {
                   </Link>
                 </Button>
               </div>
-              <Button className=" bg-slate-700 w-fit mb-4 mx-0 p-1" onClick={() => setIsLogoutModalOpen(true)}>
-                  <CiLogout size={26} className="px-0" />
+              <Button
+                className=" bg-slate-700 w-fit mb-4 mx-0 p-1"
+                onClick={() => setIsLogoutModalOpen(true)}
+              >
+                <CiLogout size={26} className="px-0" />
               </Button>
             </div>
           )}
@@ -173,7 +181,7 @@ const Sidebar = ({}: SidebarProps) => {
       <LogoutModal
         isOpen={isLogoutModalOpen}
         onClose={() => setIsLogoutModalOpen(false)}
-        signOut = {() => {
+        signOut={() => {
           // redirect(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/auth/logout`);
           window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/auth/logout`;
         }}

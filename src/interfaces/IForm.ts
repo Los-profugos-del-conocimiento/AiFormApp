@@ -1,3 +1,4 @@
+import CreateForm from '../components/createForm/createForm';
 export interface Form {
   id: string;
   type: string;
@@ -8,6 +9,15 @@ export interface Form {
   difficulty: number;
   googleFormsUrl?: any;
   items: FormItem[];
+}
+
+export interface CreateForm{
+  type: string;
+  title?: string;
+  prompt: string;
+  questions: number;
+  answerTypes?: AnswerType[];
+  difficulty?: number;
 }
 
 enum AnswerType {

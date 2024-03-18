@@ -30,7 +30,7 @@ const AlertBox = ({ type, message }: AlertBoxProps) => {
 
   return (
     <div
-      className={`fixed top-5 right-5 transition-opacity duration-500 ${
+      className={`fixed top-5 right-5 transition-opacity duration-500 max-w-[80vw] ${
         isVisible ? "opacity-100" : "opacity-0"
       } ${type === "error" ? "bg-red-400" : "bg-green-400"}
       text-white p-4 rounded-md shadow-lg flex items-center space-x-4`}

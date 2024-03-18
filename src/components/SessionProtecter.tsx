@@ -7,6 +7,6 @@ interface Props {
 }
 
 export default function SessionProtecter({ children, ...rest }: Props) {
-  useCheckUserSession();
+  // useCheckUserSession();
   return <div className="h-screen flex">{children}</div>;
 }
