@@ -108,7 +108,7 @@ const handleToggleEdit = () => {
           style={{ display: "inline-block" }}
           onClick={handleCloseSidebarMobile}
         >
-          <div className="flex items-center bg-slate-700 w-[40vw] lg:w-[15vw] px-4 py-2 rounded-md hover:bg-slate-500 cursor-pointer">
+          <div className="flex items-center bg-slate-700 w-[40vw] md:w-full px-4 py-2 rounded-md hover:bg-slate-500 cursor-pointer">
             {/* Render the icon */}
             {IconComponent && (
               <IconComponent size={20} className="text-gray-400 mr-2" />
@@ -170,6 +170,7 @@ const handleToggleEdit = () => {
       <DeleteFormModal
         title={title}
         isOpen={isDeleteModalOpen}
+        id = {id}
         onClose={() => setIsDeleteModalOpen(false)}
       />
       <RenameModal

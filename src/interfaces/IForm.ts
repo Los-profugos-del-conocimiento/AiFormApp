@@ -1,5 +1,5 @@
 import CreateForm from '../components/createForm/createForm';
-export interface Form {
+export interface IForm {
   id: string;
   type: string;
   title: string;
@@ -11,7 +11,7 @@ export interface Form {
   items: FormItem[];
 }
 
-export interface CreateForm{
+export interface ICreateForm{
   type: string;
   title?: string;
   prompt: string;

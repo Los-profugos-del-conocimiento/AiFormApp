@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { useMediaQuery } from "react-responsive";
 import LogoutModal from "@/components/modals/sidebar/LogoutModal";
 
-import { Form } from "@/interfaces/IForm";
+import { IForm } from "@/interfaces/IForm";
 import useAxios from "@/hooks/useAxios";
 import AlertBox from "../AlertBox";
 import { redirect } from "next/navigation";
@@ -44,17 +44,18 @@ const Sidebar = ({}: SidebarProps) => {
     data: formData,
     loading,
     error,
-  } = useAxios<Form>({
+  } = useAxios<IForm>({
     url: `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/form`,
     method: "get",
     withCredentials: true,
   });
+  
 
   useEffect(() => {
     if (formData !== null) {
       // Check if data is not null
       const normalizedSearchTerm = searchTerm.toLowerCase();
-      const filteredItems = formData.filter((item: Form) => {
+      const filteredItems = formData.filter((item: IForm) => {
         // Explicitly type 'item'
         const normalizedTitle = item.title.toLowerCase();
         return normalizedTitle.includes(normalizedSearchTerm);

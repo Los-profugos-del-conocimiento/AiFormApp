@@ -10,7 +10,7 @@ export default function HomePage() {
   // const token = cookieStore.get('aiform_token_420');
 
   return (
-    <div className="flex justify-center w-">
+    <div className="flex justify-center">
       <div className="max-w-[80vw] p-4 ">
         <h1 className="text-2xl lg:text-6xl font-bold mb-4 text-slate-800">
           Crear un nuevo formulario
