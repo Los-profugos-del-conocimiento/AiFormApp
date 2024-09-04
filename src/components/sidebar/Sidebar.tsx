@@ -16,8 +16,7 @@ import LogoutModal from "@/components/modals/sidebar/LogoutModal";
 import { IForm } from "@/interfaces/IForm";
 import useAxios from "@/hooks/useAxios";
 import AlertBox from "../AlertBox";
-import { redirect } from "next/navigation";
-import useCheckUserSession from "@/hooks/useCheckUserSession";
+
 
 interface SidebarProps {}
 
@@ -61,6 +60,7 @@ const Sidebar = ({}: SidebarProps) => {
         return normalizedTitle.includes(normalizedSearchTerm);
       });
       setFilteredData(filteredItems);
+      console.log("Filtered Items: ", filteredItems);
     }
   }, [searchTerm, formData]);
 
