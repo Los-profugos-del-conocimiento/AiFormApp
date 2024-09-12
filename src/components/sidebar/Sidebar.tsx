@@ -60,7 +60,6 @@ const Sidebar = ({}: SidebarProps) => {
         return normalizedTitle.includes(normalizedSearchTerm);
       });
       setFilteredData(filteredItems);
-      console.log("Filtered Items: ", filteredItems);
     }
   }, [searchTerm, formData]);
 
@@ -124,7 +123,9 @@ const Sidebar = ({}: SidebarProps) => {
           <div className="w-[100%] mx-auto h-full pr-3 mt-4">
             {filteredData.length > 0 ? (
               filteredData.map((item) => (
+                
                 <SidebarFormCard
+                  onClick={() => console.log("Item:", item)}
                   key={item.id}
                   {...item}
                   handleCloseSidebarMobile={handleCloseSidebarMobile}

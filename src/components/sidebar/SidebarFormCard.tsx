@@ -23,6 +23,7 @@ interface SidebarFormCardProps {
   title: string;
   type: string;
   handleCloseSidebarMobile?: () => void;
+  onClick?: () => void;
 }
 
 const SidebarFormCard = ({
@@ -30,6 +31,7 @@ const SidebarFormCard = ({
   title: initialTitle,
   type,
   handleCloseSidebarMobile,
+  onClick,
 }: SidebarFormCardProps) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isTitleEditable, setIsTitleEditable] = useState(false);
@@ -101,7 +103,7 @@ const handleToggleEdit = () => {
 
   return (
     <>
-      <div className="w-full flex flex-row" ref={containerRef}>
+      <div className="w-full flex flex-row" ref={containerRef} onClick={onClick}>
         <Link
           href={`/myForms/${id}`}
           passHref
