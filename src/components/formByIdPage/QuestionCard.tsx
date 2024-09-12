@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,10 +9,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Label } from "@/components/ui/label"
 
 interface Answer {
   id: string;
   text: string;
+  correct?: boolean; // El campo 'correct' solo es relevante para 'quiz'
 }
 
 interface QuestionCardProps {
@@ -33,7 +36,23 @@ const QuestionCard = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedRadio, setSelectedRadio] = useState<string | null>(null);
   const [selectedCheckboxes, setSelectedCheckboxes] = useState<string[]>([]);
-  const [selectedDropdown, setSelectedDropdown] = useState<string | null>(null);
+
+  // Efecto para establecer las respuestas correctas cuando es un 'quiz'
+  useEffect(() => {
+    if (formType === "quiz") {
+      if (answerType === "radio") {
+        const correctAnswer = answers.find((answer) => answer.correct);
+        if (correctAnswer) {
+          setSelectedRadio(correctAnswer.id);
+        }
+      } else if (answerType === "checkbox") {
+        const correctAnswers = answers
+          .filter((answer) => answer.correct)
+          .map((answer) => answer.id);
+        setSelectedCheckboxes(correctAnswers);
+      }
+    }
+  }, [formType, answerType, answers]);
 
   const toggleCollapse = () => {
     setIsExpanded(!isExpanded);
@@ -50,15 +69,19 @@ const QuestionCard = ({
   const renderAnswers = () => {
     switch (answerType) {
       case "radio":
-        return answers.map((answer) => (
-          <div key={answer.id} className="flex items-center space-x-2 mb-2">
-            <Checkbox
-              checked={selectedRadio === answer.id}
-              onCheckedChange={() => setSelectedRadio(answer.id)}
-            />
-            <label className="text-slate-300">{answer.text}</label>
-          </div>
-        ));
+        return (
+          <RadioGroup
+            value={selectedRadio || ""}
+            onValueChange={setSelectedRadio} // Actualiza el valor seleccionado
+          >
+            {answers.map((answer) => (
+              <div key={answer.id} className="flex items-center space-x-2 mb-2">
+                <RadioGroupItem value={answer.id} id={answer.id} />
+                <Label htmlFor={answer.id}>{answer.text}</Label>
+              </div>
+            ))}
+          </RadioGroup>
+        );
       case "checkbox":
         return answers.map((answer) => (
           <div key={answer.id} className="flex items-center space-x-2 mb-2">
@@ -71,7 +94,7 @@ const QuestionCard = ({
         ));
       case "drop_down":
         return (
-          <Select onValueChange={setSelectedDropdown}>
+          <Select onValueChange={(value) => setSelectedRadio(value)}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Selecciona una opción" />
             </SelectTrigger>
@@ -105,7 +128,9 @@ const QuestionCard = ({
           />
         ));
       default:
-        return <p className="text-slate-300">Tipo de respuesta no soportado.</p>;
+        return (
+          <p className="text-slate-300">Tipo de respuesta no soportado.</p>
+        );
     }
   };
 
@@ -121,8 +146,11 @@ const QuestionCard = ({
             {questionNumber}.
           </span>
           <span className="text-slate-100">{questionText}</span>
+          <span className="text-slate-400 text-sm text-right ml-2">
+            {answerType}
+          </span>
         </div>
-        <div>
+        <div className="flex items-center space-x-2">
           {isExpanded ? (
             <IoIosArrowUp size={24} className="text-slate-100" />
           ) : (
